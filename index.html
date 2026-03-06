@@ -216,11 +216,11 @@
       <div>
         <div class="hero-badge">Open to opportunities · Relocating to Austin, TX</div>
         <h1 class="hero-title">
-          Software Development<br>
-          <span class="highlight">Engineer in Test</span>
+          SDET &amp; <span class="highlight">Systems Quality</span><br>
+          Engineer
         </h1>
         <p class="hero-subtitle">
-          I build automation frameworks, CI/CD pipelines, and AI-powered quality tools for performance-critical media technologies — helping teams ship software with confidence.
+          I build automation frameworks, fuzz testing harnesses, CI/CD pipelines, and AI-powered quality tools for performance-critical media and firmware technologies — helping teams ship software with confidence.
         </p>
         <div class="hero-company">Currently @ <span>Dolby Laboratories</span> · Sunnyvale, CA</div>
         <div class="hero-actions">
@@ -263,13 +263,14 @@
         <div class="about-text">
           <div class="section-label">About Me</div>
           <h2 class="section-title">Quality engineering meets<br>AI innovation.</h2>
-          <p>I'm Thomas Wrappe — a Software Development Engineer in Test with 3+ years at Dolby Laboratories, where I build automation frameworks, CI/CD infrastructure, and system-level validation pipelines for performance-critical media technologies.</p>
-          <p>My work spans Dolby Vision certification automation, pixel-level picture quality validation, cross-device ecosystem testing, and AI-augmented QA tooling — including LLM-powered log analyzers and RAG-based CI/CD failure analysis agents.</p>
+          <p>I'm Thomas Wrappe — a Software Development Engineer in Test with 3+ years at Dolby Laboratories, where I build automation frameworks, CI/CD infrastructure, fuzz testing harnesses, and system-level validation pipelines for performance-critical media and firmware technologies.</p>
+          <p>My work spans C++ fuzz testing with AFL++ and LLVM SanitizerCoverage for embedded firmware, Dolby Vision certification automation, pixel-level picture quality validation, and AI-augmented QA tooling — including LLM-powered log analyzers and RAG-based CI/CD failure analysis agents.</p>
           <p>I partner closely with globally distributed engineering teams to shift quality left, accelerate release cycles, and protect the end-user experience across hardware and software boundaries.</p>
           <ul class="about-list">
             <li>B.S. Computer Science — Cal Poly, San Luis Obispo (2022)</li>
             <li>3+ years at Dolby Laboratories, Sunnyvale, CA</li>
-            <li>Specialization: Dolby Vision (2), HDR10, H.264/H.265/AV1, OTT, HDMI</li>
+            <li>Fuzz Testing: AFL++, C++, LLVM SanitizerCoverage, LCOV/HTML coverage reports</li>
+            <li>Specialization: Dolby Vision (2), HDR10, H.264/H.265/AV1, OTT, HDMI, Firmware</li>
             <li>Relocating to Austin, Texas · Open to Remote &amp; Hybrid roles</li>
           </ul>
         </div>
@@ -283,7 +284,7 @@
       <div class="fade-in">
         <div class="section-label">Work History</div>
         <h2 class="section-title">Professional Experience</h2>
-        <p class="section-desc">Driving quality and automation at the intersection of media technology and software engineering.</p>
+        <p class="section-desc">Driving quality and automation at the intersection of media technology, firmware, and software engineering.</p>
       </div>
       <div class="exp-card fade-in">
         <div class="exp-header">
@@ -295,12 +296,13 @@
           <div class="exp-date">3+ Years</div>
         </div>
         <ul class="exp-bullets">
-          <li>Developed internal automation tools to accelerate Dolby Vision and Picture Quality certification processes, significantly reducing manual validation effort and enabling faster feature iteration.</li>
+          <li><strong>Fuzz Testing (AFL++ / C++):</strong> Designed and implemented a C++ fuzz testing harness using AFL++ with LLVM SanitizerCoverage instrumentation to validate new embedded firmware features. Generated LCOV/HTML code coverage reports surfacing untested code paths, enabling targeted test authoring and reducing latent defects in critical firmware modules.</li>
+          <li>Built and maintained corpus management workflows for AFL++ fuzz campaigns, curating seed inputs and minimizing crash-reproducing test cases for efficient developer triage and root-cause analysis.</li>
+          <li>Integrated fuzz test execution into GitLab CI pipelines, automating nightly coverage report generation and alerting teams to coverage regressions on new firmware commits.</li>
+          <li>Developed internal Python/Pytest automation tools to accelerate Dolby Vision and Picture Quality certification processes, significantly reducing manual validation effort and enabling faster feature iteration.</li>
           <li>Authored and maintained requirements-based test plans and traceability matrices to enforce functional correctness of key Dolby Vision IDK features across releases.</li>
-          <li>Designed, implemented, and maintained CI/CD pipelines and GitLab repositories for multiple active projects, integrating automated regression suites for continuous quality signals on every commit.</li>
-          <li>Applied end-to-end defect management workflows including triage, root-cause analysis, verification, and regression validation — improving defect turnaround and release readiness.</li>
-          <li>Collaborated with globally distributed engineering and QA teams during design and implementation phases to identify defects early and validate behavior across Dolby Vision–capable device ecosystems.</li>
-          <li>Partnered closely with feature developers to debug complex system-level issues, align on test coverage gaps, and shift quality validation earlier in the SDLC, reducing late-stage defects.</li>
+          <li>Designed, implemented, and maintained CI/CD pipelines for multiple active projects, integrating automated regression suites for continuous quality signals on every commit.</li>
+          <li>Collaborated with globally distributed engineering and QA teams to identify defects early and validate behavior across Dolby Vision–capable device ecosystems.</li>
         </ul>
       </div>
     </div>
@@ -317,15 +319,27 @@
       <div class="skills-grid fade-in">
         <div class="skill-group">
           <div class="skill-group-header">
+            <div class="skill-icon orange">🔬</div>
+            <div class="skill-group-name">Fuzz Testing</div>
+          </div>
+          <div class="skill-tags">
+            <span class="tag">AFL++</span><span class="tag">libFuzzer</span>
+            <span class="tag">C++</span><span class="tag">LLVM SanitizerCoverage</span>
+            <span class="tag">gcov / lcov</span><span class="tag">Coverage Reports</span>
+            <span class="tag">Corpus Management</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-header">
             <div class="skill-icon blue">🧪</div>
             <div class="skill-group-name">Languages &amp; Test Automation</div>
           </div>
           <div class="skill-tags">
-            <span class="tag">Python</span><span class="tag">Pytest</span>
-            <span class="tag">JavaScript</span><span class="tag">Unit Testing</span>
+            <span class="tag">Python</span><span class="tag">C++</span>
+            <span class="tag">JavaScript</span><span class="tag">Bash</span>
+            <span class="tag">Pytest</span><span class="tag">Unit Testing</span>
             <span class="tag">Integration Testing</span><span class="tag">Regression</span>
-            <span class="tag">Stress Testing</span><span class="tag">Fuzz Testing</span>
-            <span class="tag">API Testing</span>
+            <span class="tag">Stress Testing</span><span class="tag">API Testing</span>
           </div>
         </div>
         <div class="skill-group">
@@ -335,8 +349,19 @@
           </div>
           <div class="skill-tags">
             <span class="tag">GitLab CI</span><span class="tag">Jenkins</span>
-            <span class="tag">GitHub Actions</span><span class="tag">GitLab</span>
+            <span class="tag">GitHub Actions</span><span class="tag">Docker</span>
             <span class="tag">Git</span><span class="tag">Perforce</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <div class="skill-icon teal">🔩</div>
+            <div class="skill-group-name">Embedded &amp; Systems</div>
+          </div>
+          <div class="skill-tags">
+            <span class="tag">Firmware Validation</span><span class="tag">Embedded Testbenches</span>
+            <span class="tag">Hardware Interface Testing</span><span class="tag">JTAG / UART</span>
+            <span class="tag">System-Level Testing</span>
           </div>
         </div>
         <div class="skill-group">
@@ -396,10 +421,27 @@
       <div class="fade-in">
         <div class="section-label">My Work</div>
         <h2 class="section-title">GitHub Projects</h2>
-        <p class="section-desc">AI-powered QA tools, automation frameworks, and media technology projects built in Python.</p>
+        <p class="section-desc">Fuzz testing harnesses, AI-powered QA tools, automation frameworks, and media technology projects — primarily in Python and C++.</p>
       </div>
       <div class="projects-grid fade-in">
 
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-type">Fuzz Testing · C++ · Firmware</div>
+            <div class="project-name">AFL++ Firmware Fuzz Harness</div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">C++ fuzz testing harness using AFL++ with LLVM SanitizerCoverage instrumentation to validate new embedded firmware features. Generates LCOV/HTML code coverage reports to expose untested code paths and surface edge-case vulnerabilities pre-release.</p>
+            <div class="project-stack">
+              <span class="tag">C++</span><span class="tag">AFL++</span>
+              <span class="tag">LLVM</span><span class="tag">lcov</span>
+              <span class="tag">GitLab CI</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/twrappe/embedded-firmware-testbench" target="_blank" class="link-btn primary">View on GitHub</a>
+            </div>
+          </div>
+        </div>
         <div class="project-card">
           <div class="project-header">
             <div class="project-type">AI-Powered QA Tool</div>
@@ -516,11 +558,11 @@
           <h2 class="section-title">Open to new opportunities</h2>
           <p class="section-desc">Looking for SDET, QA Engineer, or Quality Engineering roles — especially in Austin, TX or remote. Let's talk.</p>
           <div class="contact-items">
-            <a href="mailto:twrappe@gmail.com" class="contact-item">
+            <a href="/cdn-cgi/l/email-protection#394d4e4b5849495c795e54585055175a5654" class="contact-item">
               <div class="contact-item-icon">✉️</div>
               <div>
                 <div class="contact-item-label">Email</div>
-                <div class="contact-item-val">twrappe@gmail.com</div>
+                <div class="contact-item-val"><span class="__cf_email__" data-cfemail="cdb9babfacbdbda88daaa0aca4a1e3aea2a0">[email&#160;protected]</span></div>
               </div>
             </a>
             <a href="tel:4083482622" class="contact-item">
@@ -565,7 +607,7 @@
     <p>© 2025 Thomas Wrappe · SDET · Cal Poly SLO '22 · Hosted on GitHub Pages</p>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
@@ -575,9 +617,4 @@
     const navLinks = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-      navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : ''; });
-    });
-  </script>
-</body>
-</html>
+   
