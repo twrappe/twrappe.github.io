@@ -6,1039 +6,477 @@
   <meta name="description" content="Thomas Wrappe — SDET at Dolby Laboratories. Building AI-powered test automation, CI/CD pipelines, and quality engineering tools. Relocating to Austin, TX."/>
   <title>Thomas Wrappe · SDET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Fragment+Mono:ital@0;1&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:       #080c0f;
-      --surface:  #0d1318;
-      --surface2: #121a21;
-      --border:   #1c2a35;
-      --border2:  #243444;
-      --cyan:     #00d4ff;
-      --cyan-dim: #0a4a5a;
-      --green:    #00ff88;
-      --green-dim:#0a3a22;
-      --amber:    #ffb400;
-      --red:      #ff4455;
-      --text:     #d4e4f0;
-      --muted:    #5a7a8a;
-      --muted2:   #3a5565;
-      --white:    #f0f8ff;
-      --font-display: 'Clash Display', sans-serif;
-      --font-mono:    'Fragment Mono', monospace;
-      --font-body:    'Epilogue', sans-serif;
+      --bg:#080c0f; --surface:#0d1318; --surface2:#121a21;
+      --border:#1c2a35; --border2:#243444;
+      --cyan:#00d4ff; --cyan-dim:#0a4a5a;
+      --green:#00ff88; --green-dim:#0a3a22;
+      --amber:#ffb400; --red:#ff4455;
+      --text:#d4e4f0; --muted:#5a7a8a; --muted2:#3a5565; --white:#f0f8ff;
+      --font-display:'Syne',sans-serif;
+      --font-mono:'JetBrains Mono',monospace;
+      --font-body:'Epilogue',sans-serif;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* SCROLLBAR */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 2px; }
-
-    /* NOISE OVERLAY */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      opacity: 0.4;
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--cyan-dim);border-radius:2px}
 
     /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 4%;
-      background: rgba(8,12,15,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      color: var(--cyan);
-      letter-spacing: 0.05em;
-    }
-    .nav-logo span { color: var(--muted); }
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
-    .nav-links a {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -2px; left: 0; right: 0;
-      height: 1px; background: var(--cyan);
-      transform: scaleX(0); transition: transform 0.2s;
-    }
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-    .nav-status {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--green);
-    }
-    .nav-status::before {
-      content: '●'; font-size: 0.5rem;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(8,12,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:var(--font-mono);font-size:0.82rem;color:var(--cyan);letter-spacing:0.05em}
+    .nav-logo span{color:var(--muted)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+    .nav-links a:hover{color:var(--cyan)}
+    .nav-status{display:flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;color:var(--green)}
+    .nav-status::before{content:'●';font-size:0.5rem;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
     /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 80px 4% 60px;
-      position: relative;
-      overflow: hidden;
-    }
+    #hero{min-height:100vh;display:flex;align-items:center;padding:80px 4% 60px;position:relative;overflow:hidden}
+    #hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.3}
+    .hero-inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:1;display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--cyan);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.5rem}
+    .hero-name{font-family:var(--font-display);font-size:clamp(3.5rem,7vw,6rem);font-weight:700;color:var(--white);line-height:0.95;letter-spacing:-0.03em;margin-bottom:0.3rem}
+    .hero-name .dim{color:var(--muted2)}
+    .hero-title{font-family:var(--font-display);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:400;color:var(--cyan);margin-bottom:1.8rem}
+    .hero-desc{font-size:1rem;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:2.5rem}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--cyan);color:var(--bg);padding:0.75rem 1.6rem;border-radius:4px;font-family:var(--font-mono);font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;transition:all 0.2s;border:none;cursor:pointer}
+    .btn-primary:hover{background:var(--white);box-shadow:0 0 30px rgba(0,212,255,0.3);transform:translateY(-1px)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--text);padding:0.75rem 1.6rem;border-radius:4px;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;border:1px solid var(--border2);transition:all 0.2s;cursor:pointer}
+    .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
 
-    /* Grid background */
-    #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-      opacity: 0.4;
-    }
-
-    /* Glow orbs */
-    #hero::after {
-      content: '';
-      position: absolute;
-      top: 20%; left: 60%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 1200px; margin: 0 auto; width: 100%;
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 420px; gap: 5rem; align-items: center;
-    }
-
-    .hero-eyebrow {
-      display: flex; align-items: center; gap: 0.8rem;
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--cyan); letter-spacing: 0.12em;
-      text-transform: uppercase; margin-bottom: 1.5rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block; width: 32px; height: 1px;
-      background: var(--cyan);
-    }
-
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(3.5rem, 7vw, 6rem);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.3rem;
-    }
-    .hero-name .dim { color: var(--muted2); }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      font-weight: 400;
-      color: var(--cyan);
-      letter-spacing: -0.01em;
-      margin-bottom: 1.8rem;
-    }
-
-    .hero-desc {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--cyan); color: var(--bg);
-      padding: 0.75rem 1.6rem; border-radius: 4px;
-      font-family: var(--font-mono); font-size: 0.8rem;
-      font-weight: 500; letter-spacing: 0.06em;
-      text-decoration: none; text-transform: uppercase;
-      transition: all 0.2s; border: none; cursor: pointer;
-    }
-    .btn-primary:hover {
-      background: var(--white);
-      box-shadow: 0 0 30px rgba(0,212,255,0.3);
-      transform: translateY(-1px);
-    }
-
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: transparent; color: var(--text);
-      padding: 0.75rem 1.6rem; border-radius: 4px;
-      font-family: var(--font-mono); font-size: 0.8rem;
-      letter-spacing: 0.06em; text-decoration: none;
-      text-transform: uppercase;
-      border: 1px solid var(--border2);
-      transition: all 0.2s; cursor: pointer;
-    }
-    .btn-ghost:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: rgba(0,212,255,0.04);
-    }
-
-    /* TERMINAL CARD */
-    .terminal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,255,0.05);
-    }
-    .terminal-bar {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-    }
-    .terminal-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-    }
-    .terminal-dot.red { background: #ff5f57; }
-    .terminal-dot.amber { background: #febc2e; }
-    .terminal-dot.green { background: #28c840; }
-    .terminal-title {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--muted); margin-left: 0.5rem;
-    }
-    .terminal-body {
-      padding: 1.2rem 1.4rem;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      line-height: 2;
-    }
-    .t-prompt { color: var(--green); }
-    .t-cmd { color: var(--text); }
-    .t-key { color: var(--cyan); }
-    .t-val { color: var(--amber); }
-    .t-comment { color: var(--muted); }
-    .t-success { color: var(--green); }
-    .t-error { color: var(--red); }
-    .t-dim { color: var(--muted2); }
-    .cursor-blink {
-      display: inline-block; width: 7px; height: 13px;
-      background: var(--cyan); vertical-align: middle;
-      animation: blink 1s step-end infinite;
-      margin-left: 2px;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    /* TERMINAL */
+    .terminal{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,0.5)}
+    .terminal-bar{display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1rem;background:var(--surface2);border-bottom:1px solid var(--border)}
+    .terminal-dot{width:10px;height:10px;border-radius:50%}
+    .terminal-dot.red{background:#ff5f57}
+    .terminal-dot.amber{background:#febc2e}
+    .terminal-dot.green{background:#28c840}
+    .terminal-title{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);margin-left:0.5rem}
+    .terminal-body{padding:1.2rem 1.4rem;font-family:var(--font-mono);font-size:0.78rem;line-height:2}
+    .t-prompt{color:var(--green)}.t-cmd{color:var(--text)}.t-key{color:var(--cyan)}.t-val{color:var(--amber)}.t-comment{color:var(--muted)}.t-success{color:var(--green)}.t-error{color:var(--red)}.t-dim{color:var(--muted2)}
+    .cursor-blink{display:inline-block;width:7px;height:13px;background:var(--cyan);vertical-align:middle;animation:blink 1s step-end infinite;margin-left:2px}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
     /* SECTIONS */
-    section { padding: 80px 4%; position: relative; z-index: 1; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-
-    .section-header { margin-bottom: 3rem; }
-    .section-eyebrow {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--cyan); text-transform: uppercase;
-      letter-spacing: 0.15em; margin-bottom: 0.8rem;
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .section-eyebrow::after {
-      content: '';
-      flex: 1; max-width: 60px; height: 1px;
-      background: var(--cyan-dim);
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600; color: var(--white);
-      letter-spacing: -0.03em; line-height: 1.1;
-    }
-    .section-desc {
-      color: var(--muted); font-size: 0.95rem;
-      line-height: 1.8; margin-top: 0.8rem;
-      max-width: 540px;
-    }
+    section{padding:80px 4%;position:relative;z-index:1}
+    .section-inner{max-width:1200px;margin:0 auto}
+    .section-header{margin-bottom:3rem}
+    .section-eyebrow{font-family:var(--font-mono);font-size:0.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.8rem}
+    .section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);letter-spacing:-0.03em;line-height:1.1}
+    .section-desc{color:var(--muted);font-size:0.95rem;line-height:1.8;margin-top:0.8rem;max-width:540px}
 
     /* ABOUT */
-    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
-    }
-    .about-text p {
-      color: var(--muted); line-height: 1.9; font-size: 0.95rem;
-      margin-bottom: 1.2rem;
-    }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-    .about-tag {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      padding: 0.3rem 0.7rem; border-radius: 3px;
-      border: 1px solid var(--border2);
-      color: var(--muted);
-    }
-
-    .about-stats { display: flex; flex-direction: column; gap: 1px; }
-    .stat-row {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden; margin-bottom: 1px;
-    }
-    .stat-cell {
-      padding: 1.4rem 1.6rem;
-      background: var(--surface2);
-      border-right: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .stat-cell:last-child { border-right: none; }
-    .stat-cell:hover { background: rgba(0,212,255,0.03); }
-    .stat-num {
-      font-family: var(--font-display);
-      font-size: 2.4rem; font-weight: 700;
-      color: var(--cyan); line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-    .stat-num sup { font-size: 1rem; }
-    .stat-label {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      color: var(--muted); text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    #about{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .about-text p{color:var(--muted);line-height:1.9;font-size:0.95rem;margin-bottom:1.2rem}
+    .about-text p strong{color:var(--text);font-weight:500}
+    .about-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem}
+    .about-tag{font-family:var(--font-mono);font-size:0.7rem;padding:0.3rem 0.7rem;border-radius:3px;border:1px solid var(--border2);color:var(--muted)}
+    .about-photo-frame{width:100%;max-width:260px;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid var(--border2);box-shadow:0 0 40px rgba(0,212,255,0.08);margin-bottom:1.5rem}
+    .about-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:saturate(0.9)}
+    .about-photo-badge{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,255,136,0.2);padding:0.35rem 0.8rem;border-radius:3px;margin-bottom:1.5rem}
+    .about-photo-badge::before{content:'●';font-size:0.5rem;animation:pulse 2s infinite}
+    .stat-row{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1px}
+    .stat-cell{padding:1.4rem 1.6rem;background:var(--surface2);border-right:1px solid var(--border)}
+    .stat-cell:last-child{border-right:none}
+    .stat-num{font-family:var(--font-display);font-size:2.4rem;font-weight:700;color:var(--cyan);line-height:1;margin-bottom:0.3rem}
+    .stat-num sup{font-size:1rem}
+    .stat-label{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
 
     /* EXPERIENCE */
-    #experience { background: var(--bg); }
-    .exp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .exp-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(180deg, var(--cyan), var(--green));
-    }
-    .exp-card::after {
-      content: '';
-      position: absolute; top: -100px; right: -100px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .exp-meta {
-      display: flex; justify-content: space-between;
-      align-items: flex-start; flex-wrap: wrap; gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .exp-role {
-      font-family: var(--font-display);
-      font-size: 1.4rem; font-weight: 600;
-      color: var(--white); margin-bottom: 0.3rem;
-    }
-    .exp-company {
-      font-family: var(--font-mono); font-size: 0.82rem;
-      color: var(--cyan); margin-bottom: 0.2rem;
-    }
-    .exp-location {
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--muted);
-    }
-    .exp-badge {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      padding: 0.4rem 1rem; border-radius: 3px;
-      background: var(--cyan-dim);
-      border: 1px solid rgba(0,212,255,0.2);
-      color: var(--cyan);
-    }
-    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-    .exp-bullets li {
-      display: flex; gap: 1rem;
-      font-size: 0.9rem; color: var(--muted); line-height: 1.7;
-    }
-    .exp-bullets li::before {
-      content: '→';
-      color: var(--cyan); flex-shrink: 0;
-      font-family: var(--font-mono); font-size: 0.8rem;
-      margin-top: 3px;
-    }
+    #experience{background:var(--bg)}
+    .exp-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2.5rem;position:relative;overflow:hidden}
+    .exp-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--cyan),var(--green))}
+    .exp-meta{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+    .exp-role{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:0.3rem}
+    .exp-company{font-family:var(--font-mono);font-size:0.82rem;color:var(--cyan);margin-bottom:0.2rem}
+    .exp-location{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted)}
+    .exp-badge{font-family:var(--font-mono);font-size:0.7rem;padding:0.4rem 1rem;border-radius:3px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan)}
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:1rem}
+    .exp-bullets li{display:flex;gap:1rem;font-size:0.9rem;color:var(--muted);line-height:1.7}
+    .exp-bullets li::before{content:'→';color:var(--cyan);flex-shrink:0;font-family:var(--font-mono);font-size:0.8rem;margin-top:3px}
 
     /* SKILLS */
-    #skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-    }
-    .skill-group {
-      background: var(--surface2);
-      padding: 1.8rem;
-      transition: background 0.2s;
-      position: relative;
-    }
-    .skill-group:hover { background: rgba(0,212,255,0.03); }
-    .skill-group-header {
-      display: flex; align-items: center; gap: 0.8rem;
-      margin-bottom: 1.2rem;
-    }
-    .skill-group-icon {
-      width: 28px; height: 28px;
-      border: 1px solid var(--border2);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
-      background: var(--surface);
-    }
-    .skill-group-name {
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--cyan); text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .stag {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      padding: 0.25rem 0.6rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--text);
-      transition: all 0.15s;
-    }
-    .stag:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: var(--cyan-dim);
-    }
+    #skills{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .skill-group{background:var(--surface2);padding:1.8rem}
+    .skill-group-header{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem}
+    .skill-group-icon{width:28px;height:28px;border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;background:var(--surface)}
+    .skill-group-name{font-family:var(--font-mono);font-size:0.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.1em}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+    .stag{font-family:var(--font-mono);font-size:0.7rem;padding:0.25rem 0.6rem;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text)}
 
     /* PROJECTS */
-    #projects { background: var(--bg); }
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-      border: 1px solid var(--border); border-radius: 8px;
-      overflow: hidden;
-    }
-    .project-card {
-      background: var(--surface2);
-      padding: 2rem;
-      display: flex; flex-direction: column;
-      transition: background 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .project-card:hover { background: rgba(0,212,255,0.03); }
-    .project-card::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--cyan), transparent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s;
-    }
-    .project-card:hover::after { transform: scaleX(1); }
-    .project-type {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      color: var(--muted); text-transform: uppercase;
-      letter-spacing: 0.1em; margin-bottom: 0.6rem;
-    }
-    .project-name {
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--white); margin-bottom: 0.8rem;
-      line-height: 1.2;
-    }
-    .project-desc {
-      font-size: 0.85rem; color: var(--muted);
-      line-height: 1.7; flex: 1; margin-bottom: 1.4rem;
-    }
-    .project-stack { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.4rem; }
-    .ptag {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      padding: 0.2rem 0.55rem;
-      background: var(--cyan-dim);
-      border: 1px solid rgba(0,212,255,0.15);
-      border-radius: 2px; color: var(--cyan);
-    }
-    .project-link {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--cyan); text-decoration: none;
-      text-transform: uppercase; letter-spacing: 0.06em;
-      transition: gap 0.2s;
-    }
-    .project-link:hover { gap: 0.7rem; }
+    #projects{background:var(--bg)}
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .project-card{background:var(--surface2);padding:2rem;display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .project-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+    .project-card:hover::after{transform:scaleX(1)}
+    .project-type{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem}
+    .project-name{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--white);margin-bottom:0.8rem;line-height:1.2}
+    .project-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:1.4rem}
+    .project-stack{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1.4rem}
+    .ptag{font-family:var(--font-mono);font-size:0.65rem;padding:0.2rem 0.55rem;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.15);border-radius:2px;color:var(--cyan)}
+    .project-link{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--font-mono);font-size:0.72rem;color:var(--cyan);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em}
+
+    /* ROLES */
+    #roles{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .role-card{background:var(--surface2);padding:2rem;display:flex;flex-direction:column;gap:0.8rem;position:relative;overflow:hidden}
+    .role-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+    .role-card:hover::after{transform:scaleX(1)}
+    .role-fit{font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:2px;align-self:flex-start}
+    .role-fit.strong{background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.2);color:var(--green)}
+    .role-fit.great{background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan)}
+    .role-fit.solid{background:rgba(255,180,0,0.1);border:1px solid rgba(255,180,0,0.2);color:var(--amber)}
+    .role-title{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.2}
+    .role-desc{font-size:0.83rem;color:var(--muted);line-height:1.7;flex:1}
+    .role-skills{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.4rem}
+    .role-tag{font-family:var(--font-mono);font-size:0.63rem;padding:0.2rem 0.5rem;background:var(--surface);border:1px solid var(--border);border-radius:2px;color:var(--muted)}
 
     /* CONTACT */
-    #contact {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-    }
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    }
-    .contact-links { display: flex; flex-direction: column; gap: 1px; margin-top: 2rem; }
-    .contact-link {
-      display: flex; align-items: center; gap: 1.2rem;
-      padding: 1.2rem 1.4rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.2s;
-      margin-bottom: 1px;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact-link::before {
-      content: '';
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: var(--cyan);
-      transform: scaleY(0); transition: transform 0.2s;
-    }
-    .contact-link:hover { border-color: var(--border2); background: rgba(0,212,255,0.03); }
-    .contact-link:hover::before { transform: scaleY(1); }
-    .contact-icon {
-      width: 36px; height: 36px;
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem; flex-shrink: 0;
-    }
-    .contact-label {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      color: var(--muted); text-transform: uppercase;
-      letter-spacing: 0.1em; margin-bottom: 0.15rem;
-    }
-    .contact-val {
-      font-family: var(--font-mono); font-size: 0.82rem;
-      color: var(--text);
-    }
-    .contact-arrow {
-      margin-left: auto;
-      font-family: var(--font-mono); font-size: 0.8rem;
-      color: var(--muted2);
-      transition: color 0.2s, transform 0.2s;
-    }
-    .contact-link:hover .contact-arrow { color: var(--cyan); transform: translateX(3px); }
-
-    /* FORM */
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 4px;
-      padding: 0.75rem 1rem;
-      font-family: var(--font-mono); font-size: 0.8rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      resize: vertical;
-      outline: none;
-    }
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: var(--muted2); }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
-    }
-    .form-group textarea { min-height: 120px; }
+    #contact{background:var(--bg)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem}
+    .contact-links{display:flex;flex-direction:column;gap:1px;margin-top:2rem}
+    .contact-link{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 1.4rem;background:var(--surface2);border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all 0.2s;margin-bottom:1px}
+    .contact-link:hover{border-color:var(--border2);background:rgba(0,212,255,0.03)}
+    .contact-icon{width:36px;height:36px;background:var(--surface);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+    .contact-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.15rem}
+    .contact-val{font-family:var(--font-mono);font-size:0.82rem;color:var(--text)}
+    .contact-arrow{margin-left:auto;font-family:var(--font-mono);font-size:0.8rem;color:var(--muted2)}
+    .contact-form{display:flex;flex-direction:column;gap:1rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:0.4rem}
+    .form-group label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+    .form-group input,.form-group textarea{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.75rem 1rem;font-family:var(--font-mono);font-size:0.8rem;transition:border-color 0.2s;resize:vertical;outline:none}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted2)}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.08)}
+    .form-group textarea{min-height:120px}
 
     /* FOOTER */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 4%;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-left {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--muted2);
-    }
-    .footer-left span { color: var(--muted); }
-    .footer-right {
-      display: flex; gap: 1.5rem;
-    }
-    .footer-right a {
-      font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--muted2); text-decoration: none;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      transition: color 0.2s;
-    }
-    .footer-right a:hover { color: var(--cyan); }
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:1.5rem 4%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .footer-left{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted2)}
+    .footer-left span{color:var(--muted)}
+    .footer-right{display:flex;gap:1.5rem}
+    .footer-right a{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted2);text-decoration:none;text-transform:uppercase;letter-spacing:0.08em;transition:color 0.2s}
+    .footer-right a:hover{color:var(--cyan)}
 
-    /* SCROLL ANIMATIONS */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .skills-grid, .projects-grid { grid-template-columns: 1fr; }
-      .stat-row { grid-template-columns: 1fr 1fr; }
-      nav .nav-links { display: none; }
-      .form-row { grid-template-columns: 1fr; }
+    @media(max-width:900px){
+      .hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+      .skills-grid,.projects-grid,.roles-grid{grid-template-columns:1fr}
+      nav .nav-links{display:none}
+      .form-row{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">tw<span>@</span>prism <span>~</span></div>
-    <ul class="nav-links">
-      <li><a href="#about">about</a></li>
-      <li><a href="#experience">experience</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#contact">contact</a></li>
-    </ul>
-    <div class="nav-status">available · austin tx</div>
-  </nav>
+<nav>
+  <div class="nav-logo">Thomas <span>Wrappe</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#roles">roles</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <div class="nav-status">available · relocating to austin tx</div>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-inner">
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">SDET · Dolby Laboratories · Relocating to Austin, TX</div>
+      <h1 class="hero-name">Thomas<br><span class="dim">Wrappe</span></h1>
+      <div class="hero-title">Software Development Engineer in Test</div>
+      <p class="hero-desc">Building AI-powered test automation, CI/CD pipelines, and quality engineering infrastructure for performance-critical media technologies. Creator of PRISM — an LLM + RAG failure analysis agent for distributed silicon validation farms.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="https://github.com/twrappe" target="_blank" class="btn-ghost">github.com/twrappe</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot amber"></div>
+        <div class="terminal-dot green"></div>
+        <span class="terminal-title">prism — batch_processor.py</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">$</span> <span class="t-cmd">python batch_processor.py</span></div>
+        <div><span class="t-comment"># --workers 16 --log-dir /farm-run-logs</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-key">Dispatching</span> <span class="t-val">247</span> <span class="t-cmd">failure logs...</span></div>
+        <div><span class="t-key">Workers</span><span class="t-dim">........</span><span class="t-val">16 active</span></div>
+        <div><span class="t-key">Queue</span><span class="t-dim">...........</span><span class="t-val">redis://prod</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-042</span> <span class="t-dim">B0</span> <span class="t-error">HIGH</span></div>
+        <div><span class="t-dim">&nbsp;&nbsp;→ ECC scrubbing storm detected</span></div>
+        <div><span class="t-dim">&nbsp;&nbsp;→ blast_radius: 25% (3/12 nodes)</span></div>
+        <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-051</span> <span class="t-dim">B0</span> <span class="t-val">MED</span></div>
+        <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-017</span> <span class="t-dim">C0</span> <span class="t-success">LOW</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-key">Completed</span> <span class="t-val">247</span><span class="t-dim">/</span><span class="t-val">247</span> <span class="t-success">in 2m 51s</span></div>
+        <div><span class="t-key">Systemic issues</span><span class="t-dim">.....</span><span class="t-val">2 detected</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-prompt">$</span> <span class="cursor-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-header">
+          <div class="section-eyebrow">About</div>
+          <h2 class="section-title">Quality engineering<br>meets AI innovation.</h2>
+        </div>
+        <p>I'm Thomas Wrappe — an SDET with <strong>3+ years at Dolby Laboratories</strong>, where I build automation frameworks, CI/CD infrastructure, and system-level validation pipelines for performance-critical media technologies.</p>
+        <p>My work spans Dolby Vision certification automation, pixel-level picture quality validation, cross-device ecosystem testing, and <strong>AI-augmented QA tooling</strong> — including PRISM, an LLM + RAG agent for distributed CI/CD failure analysis at silicon farm scale.</p>
+        <p>I partner closely with globally distributed engineering teams to shift quality left, accelerate release cycles, and protect the end-user experience across hardware and software boundaries.</p>
+        <div class="about-tags">
+          <span class="about-tag">Cal Poly SLO '22</span>
+          <span class="about-tag">B.S. Computer Science</span>
+          <span class="about-tag">Dolby Vision (2)</span>
+          <span class="about-tag">Relocating → Austin TX</span>
+        </div>
+      </div>
       <div>
-        <div class="hero-eyebrow">SDET · Dolby Laboratories · Relocating to Austin</div>
-        <h1 class="hero-name">Thomas<br><span class="dim">Wrappe</span></h1>
-        <div class="hero-title">Software Development Engineer in Test</div>
-        <p class="hero-desc">
-          Building AI-powered test automation, CI/CD pipelines, and quality engineering
-          infrastructure for performance-critical media technologies. Creator of PRISM —
-          an LLM + RAG failure analysis agent for distributed silicon validation farms.
-        </p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn-primary">View Projects →</a>
-          <a href="https://github.com/twrappe" target="_blank" class="btn-ghost">github.com/twrappe</a>
+        <div class="about-photo-frame"><img src="data:image/jpeg;base64,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" alt="Thomas Wrappe" /></div>
+        <div class="about-photo-badge">Open to Work · Relocating to Austin TX</div>
+        <div class="stat-row">
+          <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">Years at Industry Experience</div></div>
+          <div class="stat-cell"><div class="stat-num">3</div><div class="stat-label">Public Projects</div></div>
         </div>
-      </div>
-
-      <!-- TERMINAL -->
-      <div class="terminal reveal reveal-delay-2">
-        <div class="terminal-bar">
-          <div class="terminal-dot red"></div>
-          <div class="terminal-dot amber"></div>
-          <div class="terminal-dot green"></div>
-          <span class="terminal-title">prism — batch_processor.py</span>
-        </div>
-        <div class="terminal-body">
-          <div><span class="t-prompt">$</span> <span class="t-cmd">python batch_processor.py</span></div>
-          <div><span class="t-comment"># --workers 16 --log-dir /farm-run-logs</span></div>
-          <div>&nbsp;</div>
-          <div><span class="t-key">Dispatching</span> <span class="t-val">247</span> <span class="t-cmd">failure logs...</span></div>
-          <div><span class="t-key">Workers</span><span class="t-dim">........</span><span class="t-val">16 active</span></div>
-          <div><span class="t-key">Queue</span><span class="t-dim">...........</span><span class="t-val">redis://prod</span></div>
-          <div>&nbsp;</div>
-          <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-042</span> <span class="t-dim">B0</span> <span class="t-error">HIGH</span></div>
-          <div><span class="t-dim">&nbsp;&nbsp;→ ECC scrubbing storm detected</span></div>
-          <div><span class="t-dim">&nbsp;&nbsp;→ blast_radius: 25% (3/12 nodes)</span></div>
-          <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-051</span> <span class="t-dim">B0</span> <span class="t-val">MED</span></div>
-          <div><span class="t-success">✓</span> <span class="t-cmd">farm-node-017</span> <span class="t-dim">C0</span> <span class="t-success">LOW</span></div>
-          <div>&nbsp;</div>
-          <div><span class="t-key">Completed</span> <span class="t-val">247</span><span class="t-dim">/</span><span class="t-val">247</span> <span class="t-success">in 2m 51s</span></div>
-          <div><span class="t-key">Systemic issues</span><span class="t-dim">.....</span><span class="t-val">2 detected</span></div>
-          <div><span class="t-success">→</span> <span class="t-dim">farm_batch_results.json</span></div>
-          <div>&nbsp;</div>
-          <div><span class="t-prompt">$</span> <span class="cursor-blink"></span></div>
+        <div class="stat-row">
+          <div class="stat-cell"><div class="stat-num">Dolby Vision, HDMI, OTT</div><div class="stat-label">Domain Experience</div></div>
+          <div class="stat-cell"><div class="stat-num"></div><div class="stat-label">Technical Experience</div></div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-inner">
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <div class="section-header">
-            <div class="section-eyebrow">About</div>
-            <h2 class="section-title">Quality engineering<br>meets AI innovation.</h2>
-          </div>
-          <p>I'm Thomas Wrappe — an SDET with <strong>3+ years at Dolby Laboratories</strong>, where I build automation frameworks, CI/CD infrastructure, and system-level validation pipelines for performance-critical media technologies.</p>
-          <p>My work spans Dolby Vision certification automation, pixel-level picture quality validation, cross-device ecosystem testing, and <strong>AI-augmented QA tooling</strong> — including PRISM, an LLM + RAG agent for distributed CI/CD failure analysis at silicon farm scale.</p>
-          <p>I partner closely with globally distributed engineering teams to shift quality left, accelerate release cycles, and protect the end-user experience across hardware and software boundaries.</p>
-          <div class="about-tags">
-            <span class="about-tag">Cal Poly SLO '22</span>
-            <span class="about-tag">B.S. Computer Science</span>
-            <span class="about-tag">Dolby Vision (2)</span>
-            <span class="about-tag">Relocating → Austin TX</span>
-            <span class="about-tag">Open to Remote</span>
-          </div>
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Experience</div>
+      <h2 class="section-title">Where I've worked.</h2>
+      <p class="section-desc">Driving quality and automation at the intersection of media technology and software engineering.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div>
+          <div class="exp-role">Software Development Engineer in Test</div>
+          <div class="exp-company">Dolby Laboratories</div>
+          <div class="exp-location">Sunnyvale, CA · May 2022 – Present</div>
         </div>
+        <div class="exp-badge">3+ Years</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Developed internal automation tools to accelerate Dolby Vision and Picture Quality certification processes, significantly reducing manual validation effort and enabling faster feature iteration.</li>
+        <li>Authored and maintained requirements-based test plans and traceability matrices to enforce functional correctness of Dolby Vision IDK features across releases.</li>
+        <li>Designed, implemented, and maintained CI/CD pipelines and GitLab repositories for multiple active projects, integrating automated regression suites for continuous quality signals on every commit.</li>
+        <li>Applied end-to-end defect management workflows including triage, root-cause analysis, verification, and regression validation — improving defect turnaround and release readiness.</li>
+        <li>Collaborated with globally distributed engineering and QA teams to identify defects early and validate behavior across Dolby Vision–capable device ecosystems.</li>
+        <li>Partnered with feature developers to debug complex system-level issues, align on test coverage gaps, and shift quality validation earlier in the SDLC.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        <div class="reveal reveal-delay-1">
-          <div class="stat-row">
-            <div class="stat-cell">
-              <div class="stat-num">3<sup>+</sup></div>
-              <div class="stat-label">Years at Dolby</div>
-            </div>
-            <div class="stat-cell">
-              <div class="stat-num">6</div>
-              <div class="stat-label">Public Projects</div>
-            </div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-cell">
-              <div class="stat-num">AI</div>
-              <div class="stat-label">LLM / RAG Tools</div>
-            </div>
-            <div class="stat-cell">
-              <div class="stat-num">DV2</div>
-              <div class="stat-label">Dolby Vision Exp.</div>
-            </div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-cell">
-              <div class="stat-num">500<sup>+</sup></div>
-              <div class="stat-label">Analyses / Day</div>
-            </div>
-            <div class="stat-cell">
-              <div class="stat-num">16</div>
-              <div class="stat-label">Concurrent Workers</div>
-            </div>
-          </div>
-        </div>
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Skills</div>
+      <h2 class="section-title">Toolchain.</h2>
+      <p class="section-desc">From test automation and CI/CD to AI-powered QA tooling and media systems validation.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">🧪</div><div class="skill-group-name">Test Automation</div></div>
+        <div class="skill-tags"><span class="stag">Python</span><span class="stag">Pytest</span><span class="stag">Unit Testing</span><span class="stag">Integration</span><span class="stag">Regression</span><span class="stag">Stress Testing</span><span class="stag">Fuzz Testing</span><span class="stag">API Testing</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">🧪</div><div class="skill-group-name">Test Automation</div></div>
+        <div class="skill-tags"><span class="stag">C++</span><span class="stag">Pytest</span><span class="stag">Unit Testing</span><span class="stag">Integration</span><span class="stag">Regression</span><span class="stag">Stress Testing</span><span class="stag">Fuzz Testing</span><span class="stag">API Testing</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">⚙️</div><div class="skill-group-name">CI/CD &amp; DevOps</div></div>
+        <div class="skill-tags"><span class="stag">GitLab CI</span><span class="stag">Jenkins</span><span class="stag">GitHub Actions</span><span class="stag">GitLab</span><span class="stag">Git</span><span class="stag">Perforce</span><span class="stag">Docker</span><span class="stag">Kubernetes</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">🤖</div><div class="skill-group-name">AI / LLM Tooling</div></div>
+        <div class="skill-tags"><span class="stag">LangChain</span><span class="stag">RAG</span><span class="stag">ChromaDB</span><span class="stag">GPT-4</span><span class="stag">Embeddings</span><span class="stag">FastAPI</span><span class="stag">Streamlit</span><span class="stag">Vector DBs</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">📋</div><div class="skill-group-name">QA Practices</div></div>
+        <div class="skill-tags"><span class="stag">Test Planning</span><span class="stag">Traceability</span><span class="stag">Defect Triage</span><span class="stag">RCA</span><span class="stag">V&amp;V</span><span class="stag">Release Sign-Off</span><span class="stag">Shift-Left</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header"><div class="skill-group-icon">💻</div><div class="skill-group-name">Languages</div></div>
+        <div class="skill-tags"><span class="stag">Python</span><span class="stag">JavaScript</span><span class="stag">C++</span><span class="stag">SQL</span><span class="stag">Bash</span><span class="stag">PowerShell</span><span class="stag">YAML</span><span class="stag">Makefile</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-inner">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Experience</div>
-        <h2 class="section-title">Where I've worked.</h2>
-        <p class="section-desc">Driving quality and automation at the intersection of media technology and software engineering.</p>
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Projects</div>
+      <h2 class="section-title">Built in public.</h2>
+      <p class="section-desc">AI-powered QA tools, automation frameworks, and media technology projects.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-type">AI · RCA · Distributed Systems</div>
+        <div class="project-name">PRISM</div>
+        <p class="project-desc">LLM + RAG-powered root cause analysis agent for CI/CD pipeline failures. Handles 500+ analyses/day across distributed silicon validation farms with cross-node correlation and systemic issue detection.</p>
+        <div class="project-stack"><span class="ptag">Python</span><span class="ptag">LangChain</span><span class="ptag">ChromaDB</span><span class="ptag">GPT-4</span><span class="ptag">Docker</span><span class="ptag">K8s</span></div>
+        <a href="https://github.com/twrappe/prism" target="_blank" class="project-link">View on GitHub →</a>
       </div>
-      <div class="exp-card reveal reveal-delay-1">
-        <div class="exp-meta">
-          <div>
-            <div class="exp-role">Software Development Engineer in Test</div>
-            <div class="exp-company">Dolby Laboratories</div>
-            <div class="exp-location">Sunnyvale, CA · May 2022 – Present</div>
-          </div>
-          <div class="exp-badge">3+ Years</div>
-        </div>
-        <ul class="exp-bullets">
-          <li>Developed internal automation tools to accelerate Dolby Vision and Picture Quality certification processes, significantly reducing manual validation effort and enabling faster feature iteration.</li>
-          <li>Authored and maintained requirements-based test plans and traceability matrices to enforce functional correctness of Dolby Vision IDK features across releases.</li>
-          <li>Designed, implemented, and maintained CI/CD pipelines and GitLab repositories for multiple active projects, integrating automated regression suites for continuous quality signals on every commit.</li>
-          <li>Applied end-to-end defect management workflows including triage, root-cause analysis, verification, and regression validation — improving defect turnaround and release readiness.</li>
-          <li>Collaborated with globally distributed engineering and QA teams to identify defects early and validate behavior across Dolby Vision–capable device ecosystems.</li>
-          <li>Partnered with feature developers to debug complex system-level issues, align on test coverage gaps, and shift quality validation earlier in the SDLC.</li>
-        </ul>
+      <div class="project-card">
+        <div class="project-type">Performance · Stress Testing</div>
+        <div class="project-name">(GSR) Stress AI</div>
+        <p class="project-desc">GSR sensor + AI biometric stress tracking project</p>
+        <div class="project-stack"><span class="ptag">Python</span><span class="ptag">AI</span><span class="ptag">Performance</span><span class="ptag">Concurrency</span></div>
+        <a href="https://github.com/twrappe/stress_ai" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Hardware · Embedded · Firmware</div>
+        <div class="project-name">Embedded Firmware Testbench</div>
+        <p class="project-desc">Python testbench for embedded firmware validation. Supports system-level testing of hardware interfaces with repeatable, automated validation across firmware build iterations.</p>
+        <div class="project-stack"><span class="ptag">Python</span><span class="ptag">Embedded</span><span class="ptag">Firmware</span><span class="ptag">Hardware QA</span></div>
+        <a href="https://github.com/twrappe/embedded-firmware-testbench" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+  </div>
+</section>
+
+<section id="roles">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Open To</div>
+      <h2 class="section-title">Roles I'm targeting.</h2>
+      <p class="section-desc">Where my background in test automation, AI tooling, media systems, and CI/CD infrastructure maps most directly to employer needs.</p>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card">
+        <span class="role-fit strong">Strong Fit</span>
+        <div class="role-title">SDET / QA Automation Engineer</div>
+        <p class="role-desc">My core role. 3+ years building frameworks, pipelines, and system-level validation at Dolby. Comfortable across web, API, embedded, and media layers.</p>
+        <div class="role-skills"><span class="role-tag">Python</span><span class="role-tag">Pytest</span><span class="role-tag">CI/CD</span><span class="role-tag">GitLab</span><span class="role-tag">Requirements-Based Testing</span></div>
+      </div>
+      <div class="role-card">
+        <span class="role-fit strong">Strong Fit</span>
+        <div class="role-title">AI QA / QA for ML Systems</div>
+        <p class="role-desc">Built PRISM — an LLM + RAG agent for CI/CD failure analysis — independently. Understand how to test, validate, and stress AI-powered systems at scale.</p>
+        <div class="role-skills"><span class="role-tag">LangChain</span><span class="role-tag">RAG</span><span class="role-tag">Prompt Injection</span><span class="role-tag">GPT-4</span><span class="role-tag">ChromaDB</span></div>
+      </div>
+      <div class="role-card">
+        <span class="role-fit strong">Strong Fit</span>
+        <div class="role-title">Test Infrastructure Engineer</div>
+        <p class="role-desc">Designed and maintained CI/CD pipelines and GitLab repos for multiple active projects at Dolby. Built async distributed test workers with Redis job queues and K8s deployments.</p>
+        <div class="role-skills"><span class="role-tag">Docker</span><span class="role-tag">Kubernetes</span><span class="role-tag">Jenkins</span><span class="role-tag">GitHub Actions</span><span class="role-tag">Redis</span></div>
+      </div>
+      <div class="role-card">
+        <span class="role-fit great">Great Fit</span>
+        <div class="role-title">Platform / SDK QA Engineer</div>
+        <p class="role-desc">Validated Dolby Vision IDK features across a large ecosystem of devices. Experience with cross-platform interoperability, errata-driven testing, and silicon revision workflows.</p>
+        <div class="role-skills"><span class="role-tag">Dolby Vision</span><span class="role-tag">HDR10</span><span class="role-tag">Interoperability</span><span class="role-tag">Cross-Device</span><span class="role-tag">Traceability</span></div>
+      </div>
+      <div class="role-card">
+        <span class="role-fit great">Great Fit</span>
+        <div class="role-title">Silicon Validation Engineer</div>
+        <p class="role-desc">PRISM was purpose-built for silicon farm environments — distributed test nodes, silicon revisions, driver versioning, ECC failure correlation, and errata-aware RCA at 500+ analyses/day.</p>
+        <div class="role-skills"><span class="role-tag">Silicon Validation</span><span class="role-tag">Distributed Nodes</span><span class="role-tag">RCA</span><span class="role-tag">C++</span><span class="role-tag">Firmware QA</span></div>
+      </div>
+      <div class="role-card">
+        <span class="role-fit solid">Solid Fit</span>
+        <div class="role-title">Developer Tools / Toolchain Engineer</div>
+        <p class="role-desc">Built internal automation tools at Dolby used by other engineers. PRISM, AI Log Analyzer, and Stress AI all demonstrate the ability to build developer-facing tooling from scratch.</p>
+        <div class="role-skills"><span class="role-tag">FastAPI</span><span class="role-tag">Python</span><span class="role-tag">Internal Tools</span><span class="role-tag">Log Analysis</span><span class="role-tag">Streamlit</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-inner">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Skills</div>
-        <h2 class="section-title">Toolchain.</h2>
-        <p class="section-desc">From test automation and CI/CD to AI-powered QA tooling and media systems validation.</p>
-      </div>
-      <div class="skills-grid reveal reveal-delay-1">
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">🧪</div>
-            <div class="skill-group-name">Test Automation</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">Python</span><span class="stag">Pytest</span>
-            <span class="stag">Unit Testing</span><span class="stag">Integration</span>
-            <span class="stag">Regression</span><span class="stag">Stress Testing</span>
-            <span class="stag">Fuzz Testing</span><span class="stag">API Testing</span>
-          </div>
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="section-header">
+          <div class="section-eyebrow">Contact</div>
+          <h2 class="section-title">Let's work<br>together.</h2>
+          <p class="section-desc">Looking for SDET, QA Engineer, or Quality Engineering roles in Austin, TX or remote. Open to full-time opportunities.</p>
         </div>
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">⚙️</div>
-            <div class="skill-group-name">CI/CD & DevOps</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">GitLab CI</span><span class="stag">Jenkins</span>
-            <span class="stag">GitHub Actions</span><span class="stag">GitLab</span>
-            <span class="stag">Git</span><span class="stag">Perforce</span>
-            <span class="stag">Docker</span><span class="stag">Kubernetes</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">🎬</div>
-            <div class="skill-group-name">Media & Systems</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">Dolby Vision (2)</span><span class="stag">HDR10</span>
-            <span class="stag">H.264</span><span class="stag">H.265/HEVC</span>
-            <span class="stag">AV1</span><span class="stag">OTT</span>
-            <span class="stag">HDMI</span><span class="stag">Picture Quality</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">🤖</div>
-            <div class="skill-group-name">AI / LLM Tooling</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">LangChain</span><span class="stag">RAG</span>
-            <span class="stag">ChromaDB</span><span class="stag">GPT-4</span>
-            <span class="stag">Embeddings</span><span class="stag">FastAPI</span>
-            <span class="stag">Streamlit</span><span class="stag">Vector DBs</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">📋</div>
-            <div class="skill-group-name">QA Practices</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">Test Planning</span><span class="stag">Traceability</span>
-            <span class="stag">Defect Triage</span><span class="stag">RCA</span>
-            <span class="stag">V&V</span><span class="stag">Release Sign-Off</span>
-            <span class="stag">Shift-Left</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-header">
-            <div class="skill-group-icon">💻</div>
-            <div class="skill-group-name">Languages</div>
-          </div>
-          <div class="skill-tags">
-            <span class="stag">Python</span><span class="stag">JavaScript</span>
-            <span class="stag">C++</span><span class="stag">SQL</span><span class="stag">Bash</span>
-            <span class="stag">PowerShell</span><span class="stag">YAML</span>
-            <span class="stag">Makefile</span>
-          </div>
+        <div class="contact-links">
+          <a href="mailto:twrappe@gmail.com" class="contact-link">
+            <div class="contact-icon">✉️</div>
+            <div><div class="contact-label">Email</div><div class="contact-val">twrappe@gmail.com</div></div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="tel:4083482622" class="contact-link">
+            <div class="contact-icon">📞</div>
+            <div><div class="contact-label">Phone</div><div class="contact-val">(408) 348-2622</div></div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/thomas-wrappe" target="_blank" class="contact-link">
+            <div class="contact-icon">💼</div>
+            <div><div class="contact-label">LinkedIn</div><div class="contact-val">linkedin.com/in/thomas-wrappe</div></div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://github.com/twrappe" target="_blank" class="contact-link">
+            <div class="contact-icon">🐙</div>
+            <div><div class="contact-label">GitHub</div><div class="contact-val">github.com/twrappe</div></div>
+            <span class="contact-arrow">→</span>
+          </a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-inner">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Projects</div>
-        <h2 class="section-title">Built in public.</h2>
-        <p class="section-desc">AI-powered QA tools, automation frameworks, and media technology projects.</p>
-      </div>
-      <div class="projects-grid reveal reveal-delay-1">
-
-        <div class="project-card">
-          <div class="project-type">AI · RCA · Distributed Systems</div>
-          <div class="project-name">PRISM</div>
-          <p class="project-desc">LLM + RAG-powered root cause analysis agent for CI/CD pipeline failures. Handles 500+ analyses/day across distributed silicon validation farms with cross-node correlation and systemic issue detection.</p>
-          <div class="project-stack">
-            <span class="ptag">Python</span><span class="ptag">LangChain</span>
-            <span class="ptag">ChromaDB</span><span class="ptag">GPT-4</span>
-            <span class="ptag">Docker</span><span class="ptag">K8s</span>
-          </div>
-          <a href="https://github.com/twrappe/prism" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
         </div>
-
-        <div class="project-card">
-          <div class="project-type">AI · Log Analysis</div>
-          <div class="project-name">AI Log Analyzer</div>
-          <p class="project-desc">Analyzes Pytest logs and provides a structured JSON summary of findings. Reduces manual triage time by automatically categorizing failures and surfacing actionable insights per run.</p>
-          <div class="project-stack">
-            <span class="ptag">Python</span><span class="ptag">Pytest</span>
-            <span class="ptag">LLM</span><span class="ptag">JSON</span>
-          </div>
-          <a href="https://github.com/twrappe/ai-log-analyzer" target="_blank" class="project-link">View on GitHub →</a>
-        </div>
-
-        <div class="project-card">
-          <div class="project-type">Performance · Stress Testing</div>
-          <div class="project-name">Stress AI</div>
-          <p class="project-desc">AI-driven stress testing framework built in Python. Pushes systems under heavy concurrent load conditions and validates stability — designed for performance-critical media pipelines.</p>
-          <div class="project-stack">
-            <span class="ptag">Python</span><span class="ptag">AI</span>
-            <span class="ptag">Performance</span><span class="ptag">Concurrency</span>
-          </div>
-          <a href="https://github.com/twrappe/stress_ai" target="_blank" class="project-link">View on GitHub →</a>
-        </div>
-
-        <div class="project-card">
-          <div class="project-type">OTT · Streaming · Validation</div>
-          <div class="project-name">OTT Streamlite</div>
-          <p class="project-desc">JavaScript-based OTT streaming interface and test tool for validating playback behavior, Dolby Vision metadata rendering, and cross-device streaming quality across browsers.</p>
-          <div class="project-stack">
-            <span class="ptag">JavaScript</span><span class="ptag">OTT</span>
-            <span class="ptag">Dolby Vision</span><span class="ptag">Streaming</span>
-          </div>
-          <a href="https://github.com/twrappe/ott_streamlite" target="_blank" class="project-link">View on GitHub →</a>
-        </div>
-
-        <div class="project-card">
-          <div class="project-type">Hardware · Embedded · Firmware</div>
-          <div class="project-name">Embedded Firmware Testbench</div>
-          <p class="project-desc">Python testbench for embedded firmware validation. Supports system-level testing of hardware interfaces with repeatable, automated validation across firmware build iterations.</p>
-          <div class="project-stack">
-            <span class="ptag">Python</span><span class="ptag">Embedded</span>
-            <span class="ptag">Firmware</span><span class="ptag">Hardware QA</span>
-          </div>
-          <a href="https://github.com/twrappe/embedded-firmware-testbench" target="_blank" class="project-link">View on GitHub →</a>
-        </div>
-
-        <div class="project-card">
-          <div class="project-type">Portfolio · GitHub Pages</div>
-          <div class="project-name">twrappe.github.io</div>
-          <p class="project-desc">This portfolio — built with vanilla HTML/CSS and hosted on GitHub Pages. Designed to showcase SDET experience, AI-powered QA projects, and Dolby Laboratories work to Austin-area tech companies.</p>
-          <div class="project-stack">
-            <span class="ptag">HTML</span><span class="ptag">CSS</span>
-            <span class="ptag">GitHub Pages</span>
-          </div>
-          <a href="https://github.com/twrappe/twrappe.github.io" target="_blank" class="project-link">View Source →</a>
-        </div>
-
+        <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"></div>
+        <div class="form-group"><label>Company</label><input type="text" placeholder="Apple · Tesla · Samsung · NXP"></div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell me about the role or project..."></textarea></div>
+        <button class="btn-primary" style="align-self:flex-start">Send Message →</button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-inner">
-      <div class="contact-grid">
-        <div class="reveal">
-          <div class="section-header">
-            <div class="section-eyebrow">Contact</div>
-            <h2 class="section-title">Let's work<br>together.</h2>
-            <p class="section-desc">Looking for SDET, QA Engineer, or Quality Engineering roles in Austin, TX or remote. Open to full-time opportunities.</p>
-          </div>
-          <div class="contact-links">
-            <a href="/cdn-cgi/l/email-protection#1a6e6d687b6a6a7f5a7d777b737634797577" class="contact-link">
-              <div class="contact-icon">✉️</div>
-              <div>
-                <div class="contact-label">Email</div>
-                <div class="contact-val"><span class="__cf_email__" data-cfemail="96e2e1e4f7e6e6f3d6f1fbf7fffab8f5f9fb">[email&#160;protected]</span></div>
-              </div>
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="tel:4083482622" class="contact-link">
-              <div class="contact-icon">📞</div>
-              <div>
-                <div class="contact-label">Phone</div>
-                <div class="contact-val">(408) 348-2622</div>
-              </div>
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="https://www.linkedin.com/in/thomas-wrappe" target="_blank" class="contact-link">
-              <div class="contact-icon">💼</div>
-              <div>
-                <div class="contact-label">LinkedIn</div>
-                <div class="contact-val">linkedin.com/in/thomas-wrappe</div>
-              </div>
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="https://github.com/twrappe" target="_blank" class="contact-link">
-              <div class="contact-icon">🐙</div>
-              <div>
-                <div class="contact-label">GitHub</div>
-                <div class="contact-val">github.com/twrappe</div>
-              </div>
-              <span class="contact-arrow">→</span>
-            </a>
-          </div>
-        </div>
+<footer>
+  <div class="footer-left">© 2025 <span>Thomas Wrappe</span> · SDET · Cal Poly SLO '22 · Built with HTML/CSS · GitHub Pages</div>
+  <div class="footer-right">
+    <a href="https://github.com/twrappe/prism" target="_blank">PRISM</a>
+    <a href="https://github.com/twrappe" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/thomas-wrappe" target="_blank">LinkedIn</a>
+    <a href="mailto:twrappe@gmail.com">Email</a>
+  </div>
+</footer>
 
-        <div class="contact-form reveal reveal-delay-1">
-          <div class="form-row">
-            <div class="form-group">
-              <label>First Name</label>
-              <input type="text" placeholder="Jane">
-            </div>
-            <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" placeholder="Smith">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="jane@company.com">
-          </div>
-          <div class="form-group">
-            <label>Company</label>
-            <input type="text" placeholder="Apple · Tesla · Samsung · NXP">
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea placeholder="Tell me about the role or project..."></textarea>
-          </div>
-          <button class="btn-primary" style="align-self:flex-start;">Send Message →</button>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : ''; });
+  });
+</script>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-left">
-      © 2025 <span>Thomas Wrappe</span> · SDET · Cal Poly SLO '22 · Built with HTML/CSS · GitHub Pages
-    </div>
-    <div class="footer-right">
-      <a href="https://github.com/twrappe/prism" target="_blank">PRISM</a>
-      <a href="https://github.com/twrappe" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/thomas-wrappe" target="_blank">LinkedIn</a>
-      <a href="/cdn-cgi/l/email-protection#82f6f5f0e3f2f2e7c2e5efe3ebeeace1edef">Email</a>
-    </div>
-  </footer>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Active nav
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
-      navLinks.forEach(a => {
+</body>
+</html>
